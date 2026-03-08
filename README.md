@@ -1,29 +1,126 @@
-![icon](./file/icon_new.png)
+<a href="./README.en.md">English</a> | <b>Indonesia</b>
 
+---
+
+![icon](./file/icon_new.png)
 
 ![Thumbnail](./file/thumbnail.png)
 
-# Mobile-Development
+# Bolatix - Aplikasi Pemesanan Tiket Sepak Bola
 
-This is project Mobile App for Bolatix.
+Bolatix adalah aplikasi Android untuk pemesanan tiket pertandingan sepak bola secara digital. Aplikasi ini dikembangkan sebagai proyek tim dalam program Studi Independen Bangkit Academy, mengombinasikan teknologi mobile, layanan cloud, dan kecerdasan buatan untuk memberikan pengalaman pemesanan tiket yang mudah, cepat, dan aman.
 
-## Features
+## Daftar Isi
 
-- **Authentication** - User can login and register
-- **Profile** - User can update profile
-- **Ticket** - User can buy ticket
-- **Payment Gateway** - User can pay for ticket
-- **Notification** - User can receive notification
-- **Multiple Payments** - User can make multiple payments
-- **Payment History** - User can see payment history
-- **Standings** - User can see standings
-- **PDF Ticket** - User can download ticket as PDF
-- **Share PDF** - User can share ticket as PDF
+- [Tentang Proyek](#tentang-proyek)
+- [Fitur](#fitur)
+- [Arsitektur](#arsitektur)
+- [Teknologi yang Digunakan](#teknologi-yang-digunakan)
+- [Tangkapan Layar](#tangkapan-layar)
+- [Prasyarat](#prasyarat)
+- [Instalasi](#instalasi)
+- [Unduhan](#unduhan)
+- [Tim Pengembang](#tim-pengembang)
+- [Lisensi](#lisensi)
 
-## Screenshots
+---
+
+## Tentang Proyek
+
+Bolatix hadir untuk menjawab kebutuhan penggemar sepak bola Indonesia dalam mendapatkan tiket pertandingan secara digital. Dengan fitur rekomendasi berbasis machine learning, pengguna dapat menemukan pertandingan yang relevan berdasarkan tim favorit maupun riwayat pembelian sebelumnya. Pembayaran terintegrasi dengan Midtrans sehingga mendukung berbagai metode pembayaran yang umum digunakan di Indonesia. Tiket diterbitkan dalam format PDF yang dapat diunduh dan dibagikan langsung dari aplikasi.
+
+Proyek ini merupakan hasil kolaborasi tiga jalur keahlian: Mobile Development, Cloud Computing, dan Machine Learning dalam ekosistem Bangkit Academy.
+
+---
+
+## Fitur
+
+| Fitur | Deskripsi |
+|---|---|
+| Autentikasi | Registrasi dan masuk menggunakan email, password, serta Google Sign-In |
+| Onboarding | Tampilan pengenalan aplikasi untuk pengguna baru |
+| Beranda | Menampilkan pertandingan mendatang dan rekomendasi personal |
+| Rekomendasi Cerdas | Rekomendasi pertandingan berdasarkan tim favorit dan riwayat pembelian (ML) |
+| Pemesanan Tiket | Pemilihan pertandingan, kelas tribun, dan gate masuk |
+| Payment Gateway | Pembayaran terintegrasi dengan Midtrans (multi-metode) |
+| Verifikasi Pembayaran | Konfirmasi dan verifikasi data sebelum transaksi final |
+| Riwayat Pesanan | Daftar seluruh transaksi tiket yang pernah dilakukan |
+| Tiket PDF | Unduh dan bagikan tiket dalam format PDF |
+| Klasemen | Lihat klasemen liga terkini |
+| Favorit Tim | Pilih dan simpan tim favorit untuk rekomendasi yang lebih akurat |
+| Profil Pengguna | Ubah foto profil, nama, dan informasi personal |
+| Notifikasi | Pemberitahuan dalam aplikasi terkait transaksi dan informasi pertandingan |
+| Lupa Password | Pengiriman email reset password |
+| FAQ | Pertanyaan yang umum diajukan |
+| Kebijakan Privasi | Halaman kebijakan privasi dan ketentuan penggunaan |
+| Tentang Kami | Informasi tim dan aplikasi |
+
+---
+
+## Arsitektur
+
+Aplikasi ini menerapkan pola arsitektur **MVVM (Model-View-ViewModel)** dengan pendekatan Clean Architecture ringan, terdiri dari tiga lapisan utama:
+
+```
+app/src/main/java/com/example/bolatix/
+├── data/
+│   ├── firebase/        # Firebase Auth, Firestore, dan FCM helper
+│   ├── models/          # Data class (User, Team, Stadium, Gate, dll.)
+│   ├── remote/
+│   │   ├── network/     # Retrofit service interface dan interceptor
+│   │   └── response/    # Data class respons API
+│   └── repository/      # AuthRepository dan FootballRepository
+├── di/                  # Koin dependency injection module
+├── preference/          # DataStore untuk preferensi onboarding dan user
+├── ui/
+│   ├── activities/      # Seluruh Activity (18 activity)
+│   ├── adapters/        # RecyclerView Adapter
+│   ├── components/      # Komponen UI custom
+│   ├── fragments/       # Fragment (Home, Standings, Order, Profile)
+│   └── viewmodels/      # ViewModel untuk setiap fitur
+└── utils/               # Utility dan extension function
+```
+
+---
+
+## Teknologi yang Digunakan
+
+### Mobile (Android)
+| Library | Versi | Kegunaan |
+|---|---|---|
+| Kotlin | - | Bahasa pemrograman utama |
+| Android SDK | min 24 / target 34 | Platform Android |
+| ViewBinding | - | Binding layout secara type-safe |
+| Navigation Component | - | Navigasi antar fragment |
+| Firebase Authentication | - | Autentikasi email dan Google |
+| Firebase Firestore | - | Database pengguna dan notifikasi |
+| Retrofit 2 | - | Komunikasi HTTP ke REST API |
+| OkHttp Logging Interceptor | - | Logging dan retry request |
+| Koin | - | Dependency Injection |
+| Glide | - | Pemuatan gambar dari URL |
+| UCrop | - | Pemotongan gambar profil |
+| Midtrans SDK (UIKit) | - | Payment gateway |
+| Progress Button | - | Tombol dengan animasi loading |
+| ViewPager2 | - | Onboarding slide |
+| DataStore Preferences | - | Penyimpanan preferensi lokal |
+| Markwon Core | - | Render konten Markdown |
+| Material 3 | - | Komponen UI Material Design |
+
+### Backend
+- REST API berbasis Cloud Run (Google Cloud Platform)
+- Base URL: `https://bolatix-552077162382.asia-southeast2.run.app/api/`
+- Repositori Backend: [BolaTix/Cloud-Computing](https://github.com/BolaTix/Cloud-Computing)
+
+### Machine Learning
+- Model rekomendasi berbasis riwayat dan preferensi tim
+- Repositori ML: [BolaTix/Machine-Learning](https://github.com/BolaTix/Machine-Learning)
+
+---
+
+## Tangkapan Layar
 
 <details>
-  <summary>You can see screenshots in here</summary>
+  <summary>Tampilkan tangkapan layar</summary>
   <table>
     <tr>
       <td><img src="./file/screenshoot/1.png" alt="1" width="100%"></td>
@@ -88,32 +185,75 @@ This is project Mobile App for Bolatix.
   </table>
 </details>
 
-## File you can download
+---
 
-- [Mobile App](./file/BOLATIX.apk)
-- [Figma Desain](./file/FGMA-BOLATIX.fig)
-- [Backend](https://github.com/BolaTix/Cloud-Computing)
-- [Model Machine Learning](https://github.com/BolaTix/Machine-Learning) 
+## Prasyarat
 
-## Installation
+Sebelum menjalankan proyek ini, pastikan Anda telah menyiapkan:
 
-- Clone the repository:
+- Android Studio Hedgehog atau yang lebih baru
+- JDK 8 atau yang lebih baru
+- Android SDK dengan API Level minimal 24
+- Akun Firebase (untuk konfigurasi `google-services.json`)
+- Akun Midtrans Sandbox (untuk konfigurasi client key)
+- Koneksi internet aktif
+
+---
+
+## Instalasi
+
+1. **Clone repositori**
 
 ```bash
-  git clone https://github.com/Bolatix/bolatix.git
+git clone https://github.com/BolaTix/Mobile-Development.git
+cd Mobile-Development
 ```
 
-- Install dependencies
-- Run the app
+2. **Konfigurasi Firebase**
 
-## Libraries
+   - Buat proyek di [Firebase Console](https://console.firebase.google.com/)
+   - Aktifkan Firebase Authentication (Email/Password dan Google Sign-In)
+   - Aktifkan Cloud Firestore
+   - Unduh file `google-services.json` dan tempatkan di direktori `app/`
 
-- **Firebase** - Firebase is a platform that allows developers to build and deploy apps, with , authentication, database and more.
-- **Midtrans** - Midtrans is a payment gateway that allows developers to accept payments from users.
-- **Proggress Button** - Progress Button is a library that allows developers to add a progress button to their app.
-- **Glide** - Glide is a library that allows developers to load images from the internet.
-- **Retrofit 2** - Retrofit is a library that allows developers to make HTTP requests to a server.
-- **KOIN** - Koin is a library that allows developers to inject dependencies into their app.
-- **UCROP** - UCROP is a library that allows developers to crop images.
-- **Markdow Core** - Markdow Core is a library that allows developers to parse markdown.
-- **Material 3** - Material 3 is a library that allows developers to use Material Design 3.
+3. **Konfigurasi Midtrans**
+
+   Buka file `app/build.gradle.kts` dan sesuaikan nilai berikut:
+
+   ```kotlin
+   buildConfigField("String", "MERCHANT_KEY", "\"<client-key-sandbox-anda>\"")
+   buildConfigField("String", "MIDTRANS_URL_CHARGE", "\"<url-charge-server-anda>\"")
+   ```
+
+4. **Buka di Android Studio**
+
+   - Buka Android Studio, pilih `File > Open`, lalu arahkan ke folder proyek
+   - Tunggu proses Gradle sync selesai
+
+5. **Jalankan Aplikasi**
+
+   - Sambungkan perangkat Android (API 24+) atau gunakan emulator
+   - Tekan tombol `Run` di Android Studio
+
+---
+
+## Unduhan
+
+| Sumber Daya | Tautan |
+|---|---|
+| Aplikasi Android (APK) | [Unduh BOLATIX.apk](./file/BOLATIX.apk) |
+| Desain Figma | [Unduh FGMA-BOLATIX.fig](./file/FGMA-BOLATIX.fig) |
+| Repositori Backend | [BolaTix/Cloud-Computing](https://github.com/BolaTix/Cloud-Computing) |
+| Repositori Machine Learning | [BolaTix/Machine-Learning](https://github.com/BolaTix/Machine-Learning) |
+
+---
+
+## Tim Pengembang
+
+Proyek ini dikembangkan oleh tim Mobile Development dalam program **Bangkit Academy** (Studi Independen Bersertifikat).
+
+---
+
+## Lisensi
+
+Proyek ini dilisensikan di bawah **MIT License**. Lihat file [LICENSE](./LICENSE) untuk informasi selengkapnya.
